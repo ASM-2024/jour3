@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="sergio.moubayed" />
+  <title>Signals</title>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+  <link rel="stylesheet" href="style.css" />
+<style type="text/css">
+  :root {
+/*
+  --color: #2096ba;
+  --color-secondary: #2096ba;
+  --color-accent: #f7f8fa;
+  --color-text: #222426;
+  --color-shadow: #c5d2db;
+  --width-content: 720px;
+  }
+*/
+
+  code, samp {
+    font-size: 1.2em;
+  }
+
+  nav {
+    justify-content: space-evenly;
+  }
+
+
+  a:hover {
+    filter: none;
+    color: #df6e21;
+  }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+  <nav id="TOC">
+      <a href="/https://asm-2024.github.io/jour3/"><img alt="Logo" src="https://avatars.githubusercontent.com/u/96961500?s=200&amp;v=4" height="70"></a>
+            <ul>
+          <li><a href="#">Navigation</a>
+            <ul>
+            <li><a href="#signals">Signals</a><ul>
+            <li><a href="#reminder">Reminder</a></li>
+            <li><a href="#list-signals">List signals</a></li>
+            <li><a href="#tracing-signals">Tracing signals</a></li>
+            <li><a href="#catching-signals">Catching signals</a></li>
+            </ul></li>
+            </ul>
+          </li>
+      </ul>
+        </nav>
+<h1 class="title">Signals</h1>
+<p class="author">sergio.moubayed</p>
+</header>
+<main>
+<hr>
+<article>
+<h1 id="signals">Signals</h1>
+<h2 id="reminder">Reminder</h2>
+<p>Since the memory used by two processes is distinct, we need mechanisms such as IPCs (Inter Process Communication) to enable such interactions. Signals are a a form of IPC that enable us to communicate between two processes.</p>
+<p>To communicate, you need to identify the process through its PID (Process ID). The signal can then be sent by providing this same PID to “communicate” with this process.</p>
+<p>You for sure came across some usages of signals without even realizing it. The <a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">kernel</a> can use them to make sure you aren’t doing anything wrong in your process. That’s why most signal just kill your process.</p>
+<h2 id="list-signals">List signals</h2>
+<p>To list all signals, there is a command you could use for your system:</p>
+<pre class="bash"><code>$ kill -l</code></pre>
+<p>The expected output (depending on your operating system) should look like the following:</p>
+<pre><code> 1) SIGHUP   2) SIGINT   3) SIGQUIT  4) SIGILL   5) SIGTRAP
+ 6) SIGABRT  7) SIGBUS   8) SIGFPE   9) SIGKILL 10) SIGUSR1
+11) SIGSEGV 12) SIGUSR2 13) SIGPIPE 14) SIGALRM 15) SIGTERM
+16) SIGSTKFLT   17) SIGCHLD 18) SIGCONT 19) SIGSTOP 20) SIGTSTP
+21) SIGTTIN 22) SIGTTOU 23) SIGURG  24) SIGXCPU 25) SIGXFSZ
+26) SIGVTALRM   27) SIGPROF 28) SIGWINCH    29) SIGIO   30) SIGPWR
+31) SIGSYS  34) SIGRTMIN    35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3
+38) SIGRTMIN+4  39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13
+48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12
+53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7
+58) SIGRTMAX-6  59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX</code></pre>
+<h3 id="example">Example</h3>
+<p>For example, when you try to access a restricted memory address, the kernel doesn’t like it and sends a signal to stop you. The name of the signal should not surprise you at all: <code>SIGSEGV</code>. This should (if you went through S3) trigger your PTSD.</p>
+<h2 id="tracing-signals">Tracing signals</h2>
+<p>To trace signals sent to a process we’re going to use <code>strace(1)</code> (check the man page for more info).</p>
+<pre class="bash"><code>$ strace -e &#39;trace=!all&#39; [CMD]</code></pre>
+<p>You can have fun trying to see the different possible signals that you could get the kernel to send to your process. ### Exercise Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them. (For the sake of the exercise, do NOT compile with the usual flags) - What the malloc?!</p>
+<pre class="c"><code>#include &lt;err.h&gt;
+#include &lt;stdlib.h&gt;
+
+void *xmalloc(unsigned size)
+{
+    void *res = malloc(size);
+    if (!res)
+        errx(1, &quot;Not enough memory!&quot;);
+    return res;
+}
+
+int main(void)
+{
+    size_t i = 1;
+    void *tmp = NULL;
+
+    while (i &gt;= 0)
+    {
+        tmp = xmalloc(i);
+        i = i &lt;&lt; 1;
+    }
+
+    return 0;
+}</code></pre>
+<ul>
+<li>Do I even exist?</li>
+</ul>
+<pre class="c"><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int *answer = 42;
+    printf(&quot;%d\n&quot;, *answer);
+
+    return 0;
+}</code></pre>
+<ul>
+<li>One pie, Zero friends</li>
+</ul>
+<pre class="c"><code>#include &lt;stdio.h&gt;
+
+int is_prime(int n)
+{
+    for (int i = 0; i &lt; n; i++)
+        if (i != 1 &amp;&amp; n % i == 0)
+            return 0;
+    return 1;
+}
+
+int main(void)
+{
+    for (int i = 2; i &lt; 100; i++)
+        if (is_prime(i))
+            printf(&quot;%d\n&quot;, i);
+    return 0;
+}</code></pre>
+<h2 id="catching-signals">Catching signals</h2>
+<p>So C provides multiple ways to catch signals and change the original behavior of the process. The most basic way is using <code>signal(2)</code>:</p>
+<pre class="c"><code>typedef void (*sighandler_t)(int);
+sighandler_t signal(int signum, sighandler_t handler);</code></pre>
+<p>There is a better alternative that we will favor: <code>sigaction(2)</code></p>
+<pre class="c"><code>int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);</code></pre>
+<h3 id="exercise">Exercise</h3>
+<p>The following exercises will only require you to play/modify with the following code</p>
+<pre class="c"><code>#define _POSIX_C_SOURCE 200809l
+
+#include &lt;err.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+
+void handler(int signum)
+{
+    printf(&quot;I cannot be terminated with signal %d\n&quot;, signum);
+}
+
+int main(void)
+{
+    struct sigaction sa;
+    sa.sa_flags = 0;
+    sa.sa_handler = handler;
+
+    if (sigemptyset(&amp;sa.sa_mask) == -1)
+        errx(1, &quot;Error in sigemptyset&quot;);
+        
+    if (sigaction(SIGINT, &amp;sa, NULL) == -1)
+        errx(1, &quot;Can&#39;t link handler to signal&quot;);
+
+    while (1);
+   
+    return 0;
+}</code></pre>
+<p>Ctrl-C usually sends a <code>SIGINT</code> (interrupt) signal to the program to stop it, we could intercept it and change its behavior to not stop the program.</p>
+<p>Try to modify the signal intercepted and set it to <code>SIGKILL</code> and see what happens. ## Sending Signals As mentioned prior, you only need a PID to send a signal to a process .</p>
+<ul>
+<li>On a terminal</li>
+</ul>
+<pre class="bash"><code>$ kill -s [SIGNAL] [PID]</code></pre>
+<ul>
+<li>In C use <code>kill(2)</code></li>
+</ul>
+<pre class="c"><code>int kill(pid_t pid, int sig);</code></pre>
+<h3 id="exercise-1">Exercise</h3>
+<p>In this exercise, we’ll ask you to play a small game.</p>
+<p>First install the following <a href="game">binary file</a>, then make it executable through the following command:</p>
+<pre class="bash"><code>chmod +x game</code></pre>
+<p>Then you can start the game by running the file like any other executable:</p>
+<pre class="bash"><code>./game</code></pre>
+<p>The program will first start by displaying its own PID, it will then wait for you to send a specific signal through a terminal in less than the time displayed. When you go through 100 rounds, there is a small surprise at the end.</p>
+<p>We do <strong>not</strong> expect you to go through the whole game <strong>yet</strong>. You can just have fun playing and discovering new signals.</p>
+<h4 id="little-spoiler-for-d4-workshop">Little spoiler for D4-workshop</h4>
+<p>You will have to write C code to “cheat” at this game, so you’re basically going to automatize the game. To make it easier, only the signal names separated by <code>\n</code> will be sent to <code>stdout</code>. All the extra information will be written on <code>stderr</code> so that it could be ignored when you try to read from stdout.</p>
+<p>Here are some commands to visualize what’s happening:</p>
+<pre class="bash"><code># Redirecting stdout to /dev/null (removing stdout and keeping stderr)
+./game &gt; /dev/null</code></pre>
+<pre class="bash"><code># Redirecting stderr to /dev/null (removing stdout and keeping stderr)
+./game 2&gt; /dev/null</code></pre>
+<hr>
+</article>
+</main>
+</body>
+</html>
