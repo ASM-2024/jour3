@@ -3,6 +3,7 @@ title: "Signals"
 author: sergio.moubayed
 logo: https://avatars.githubusercontent.com/u/96961500?s=200&v=4
 ---
+[I/O Skeleton](io_skeleton.tar.gz)
 
 # Signals
 ## Reminder
@@ -43,7 +44,7 @@ To trace signals sent to a process we're going to use ``strace(1)`` (check the m
 $ strace -e 'trace=!all' [CMD]
 ```
 You can have fun trying to see the different possible signals that you could get the kernel to send to your process.
-### Exercise 
+### Exercise
 Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them.
 (For the sake of the exercise, do NOT compile with the usual flags)
 - What the malloc?!
@@ -139,12 +140,12 @@ int main(void)
 
     if (sigemptyset(&sa.sa_mask) == -1)
         errx(1, "Error in sigemptyset");
-        
+
     if (sigaction(SIGINT, &sa, NULL) == -1)
         errx(1, "Can't link handler to signal");
 
     while (1);
-   
+
     return 0;
 }
 ```
