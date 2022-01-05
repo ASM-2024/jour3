@@ -77,6 +77,7 @@
 </ul>
 <h2 id="my_puts.c">my_puts.c</h2>
 <p>The first step you will be taken is to code a small version of <code>puts(3)</code> You are expected to write a function that, when given a string, will print it to <code>stdout</code>.</p>
+<p>Though <code>puts</code>’ man-page specifies return values, we will not be returning anything from puts as, since you have to exit the program if <code>write</code> fails, this takes care of any potential error.</p>
 <h2 id="file_type.c">file_type.c</h2>
 <p>This exercise aims at introducing <code>stat(2)</code>. Your objective is to write the function <code>void file_type(char *filename)</code> that takes a filename and prints whether this file is a regular file or a directory. (Hint: You might want to take a look at the macros S_IS<em>-something</em> that come with <code>stat</code>).</p>
 <p>Expected output:</p>

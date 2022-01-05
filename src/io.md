@@ -27,6 +27,10 @@ The first step you will be taken is to code a small version of `puts(3)`
 You are expected to write a function that, when given a string, will print it
 to `stdout`.
 
+Though `puts`' man-page specifies return values, we will not be returning
+anything from puts as, since you have to exit the program if `write` fails,
+this takes care of any potential error.
+
 ## file_type.c
 This exercise aims at introducing `stat(2)`. Your objective is to write the
 function `void file_type(char *filename)` that takes a filename and prints
