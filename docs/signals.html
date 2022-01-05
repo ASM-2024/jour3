@@ -89,7 +89,10 @@
 <h2 id="tracing-signals">Tracing signals</h2>
 <p>To trace signals sent to a process we’re going to use <code>strace(1)</code> (check the man page for more info).</p>
 <pre class="bash"><code>$ strace -e &#39;trace=!all&#39; [CMD]</code></pre>
-<p>You can have fun trying to see the different possible signals that you could get the kernel to send to your process. ### Exercise Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them. (For the sake of the exercise, do NOT compile with the usual flags) - What the malloc?!</p>
+<p>You can have fun trying to see the different possible signals that you could get the kernel to send to your process. ### Exercise Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them. (For the sake of the exercise, do NOT compile with the usual flags)</p>
+<ul>
+<li>What the malloc?!</li>
+</ul>
 <pre class="c"><code>#include &lt;err.h&gt;
 #include &lt;stdlib.h&gt;
 

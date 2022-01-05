@@ -46,6 +46,7 @@ You can have fun trying to see the different possible signals that you could get
 ### Exercise
 Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them.
 (For the sake of the exercise, do NOT compile with the usual flags)
+
 - What the malloc?!
 ```c
 #include <err.h>

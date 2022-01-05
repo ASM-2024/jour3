@@ -69,6 +69,10 @@ parrot: Squuuuaaaaaawk! The given value is invalid. Try again!
 Squuuuaaaaaawk! Hello human, give me a number!
 ```
 
+# Extra exercises
+For anyone willing to do extra exercises regarding I/O, we suggest you take
+a look at the practical given during the past years [right here](https://prepa.pages.epita.fr/asm/strasbourg-c-unix-seminar/practicals/D1/practical1.html)
+
 # Correction
 
 A correction will be given this weekend. It will be on the Github repository
