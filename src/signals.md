@@ -3,7 +3,6 @@ title: "Signals"
 author: sergio.moubayed
 logo: https://avatars.githubusercontent.com/u/96961500?s=200&v=4
 ---
-[I/O Skeleton](io_skeleton.tar.gz)
 
 # Signals
 ## Reminder

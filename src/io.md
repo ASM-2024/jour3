@@ -15,7 +15,6 @@ Here is the skeleton for this part:
 [I/O Skeleton](io_skeleton.tar.gz)
 
 # Low-level I/O
-## my_puts.c
 For this part, you will need the following `syscalls`:
 
 - open(2)
@@ -23,6 +22,7 @@ For this part, you will need the following `syscalls`:
 - stat(2)
 - write(2)
 
+## my_puts.c
 The first step you will be taken is to code a small version of `puts(3)`
 You are expected to write a function that, when given a string, will print it
 to `stdout`.
