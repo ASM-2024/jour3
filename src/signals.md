@@ -170,7 +170,7 @@ int kill(pid_t pid, int sig);
 ### Exercise
 In this exercise, we'll ask you to play a small game.
 
-First install the following [binary file](game), then make it executable through the following command:
+First install the following [binary file](nix-os/game) (if you're not on the PIE download this [binary file](ubuntu/game) compiled on ubuntu), then make it executable through the following command:
 ```bash
 $ chmod +x game
 ```
