@@ -41,7 +41,7 @@
 <body>
 <header id="title-block-header">
   <nav id="TOC">
-      <a href="/jour1"><img alt="Logo" src="https://avatars.githubusercontent.com/u/96961500?s=200&amp;v=4" height="70"></a>
+      <a href="https://asm-2024.github.io/jour3/"><img alt="Logo" src="https://avatars.githubusercontent.com/u/96961500?s=200&amp;v=4" height="70"></a>
             <ul>
           <li><a href="#">Navigation</a>
             <ul>
@@ -63,11 +63,11 @@
 <main>
 <hr>
 <article>
+<p><a href="C_UNIX_Workshop_IO_Signals.pdf">Today’s slides</a></p>
 <h1 id="introduction">Introduction</h1>
 <p>The first part of today’s practical aims at seeing how input/output is managed at low-level. To do so, you are going to be restricted in the headers you can use, meaning, you <strong>cannot</strong> use <code>&lt;stdio.h&gt;</code>.</p>
-<p>Here is the skeleton for this part: <a href="">I/O Skeleton</a> <strong>NOT AVAILABLE YET</strong></p>
+<p>Here is the skeleton for this part: <a href="io_skeleton.tar.gz">I/O Skeleton</a></p>
 <h1 id="low-level-io">Low-level I/O</h1>
-<h2 id="my_puts.c">my_puts.c</h2>
 <p>For this part, you will need the following <code>syscalls</code>:</p>
 <ul>
 <li>open(2)</li>
@@ -75,6 +75,7 @@
 <li>stat(2)</li>
 <li>write(2)</li>
 </ul>
+<h2 id="my_puts.c">my_puts.c</h2>
 <p>The first step you will be taken is to code a small version of <code>puts(3)</code> You are expected to write a function that, when given a string, will print it to <code>stdout</code>.</p>
 <h2 id="file_type.c">file_type.c</h2>
 <p>This exercise aims at introducing <code>stat(2)</code>. Your objective is to write the function <code>void file_type(char *filename)</code> that takes a filename and prints whether this file is a regular file or a directory. (Hint: You might want to take a look at the macros S_IS<em>-something</em> that come with <code>stat</code>).</p>
@@ -101,7 +102,7 @@ a
 parrot: Squuuuaaaaaawk! The given value is invalid. Try again!
 Squuuuaaaaaawk! Hello human, give me a number!</code></pre>
 <h1 id="correction">Correction</h1>
-<p>A correction will be given on Thursday. It will be on the Github repository and the link will be given here. This will <strong>not</strong> be the <strong>only</strong> nor <strong>the best</strong> solution to the problem but do take the time to read it as it uses advanced concepts!</p>
+<p>A correction will be given this weekend. It will be on the Github repository and the link will be given here. This will <strong>not</strong> be the <strong>only</strong> nor <strong>the best</strong> solution to the problem but do take the time to read it as it uses advanced concepts!</p>
 <hr>
 </article>
 </main>

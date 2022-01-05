@@ -41,11 +41,12 @@
 <body>
 <header id="title-block-header">
   <nav id="TOC">
-      <a href="/https://asm-2024.github.io/jour3/"><img alt="Logo" src="https://avatars.githubusercontent.com/u/96961500?s=200&amp;v=4" height="70"></a>
+      <a href="https://asm-2024.github.io/jour3/"><img alt="Logo" src="https://avatars.githubusercontent.com/u/96961500?s=200&amp;v=4" height="70"></a>
             <ul>
           <li><a href="#">Navigation</a>
             <ul>
-            <li><a href="#signals">Signals</a><ul>
+            <li><a href="#signals">Signals</a>
+            <ul>
             <li><a href="#reminder">Reminder</a></li>
             <li><a href="#list-signals">List signals</a></li>
             <li><a href="#tracing-signals">Tracing signals</a></li>
@@ -172,12 +173,12 @@ int main(void)
 
     if (sigemptyset(&amp;sa.sa_mask) == -1)
         errx(1, &quot;Error in sigemptyset&quot;);
-        
+
     if (sigaction(SIGINT, &amp;sa, NULL) == -1)
         errx(1, &quot;Can&#39;t link handler to signal&quot;);
 
     while (1);
-   
+
     return 0;
 }</code></pre>
 <p>Ctrl-C usually sends a <code>SIGINT</code> (interrupt) signal to the program to stop it, we could intercept it and change its behavior to not stop the program.</p>

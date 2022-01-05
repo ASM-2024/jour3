@@ -3,6 +3,7 @@ title: "Low-level input and output"
 author: victor-emmanuel.provost
 logo: https://avatars.githubusercontent.com/u/96961500?s=200&v=4
 ---
+[Today's slides](C_UNIX_Workshop_IO_Signals.pdf)
 
 # Introduction
 
@@ -11,11 +12,9 @@ at low-level. To do so, you are going to be restricted in the headers you can
 use, meaning, you **cannot** use `<stdio.h>`.
 
 Here is the skeleton for this part:
-[I/O Skeleton]()
-**NOT AVAILABLE YET**
+[I/O Skeleton](io_skeleton.tar.gz)
 
 # Low-level I/O
-## my_puts.c
 For this part, you will need the following `syscalls`:
 
 - open(2)
@@ -23,6 +22,7 @@ For this part, you will need the following `syscalls`:
 - stat(2)
 - write(2)
 
+## my_puts.c
 The first step you will be taken is to code a small version of `puts(3)`
 You are expected to write a function that, when given a string, will print it
 to `stdout`.
@@ -67,7 +67,7 @@ Squuuuaaaaaawk! Hello human, give me a number!
 
 # Correction
 
-A correction will be given on Thursday. It will be on the Github repository
+A correction will be given this weekend. It will be on the Github repository
 and the link will be given here.
 This will **not** be the **only** nor **the best**
 solution to the problem but do take the time to read it as it uses advanced
