@@ -46,8 +46,7 @@
           <li><a href="#">Navigation</a>
             <ul>
             <li><a href="#introduction">Introduction</a></li>
-            <li><a href="#low-level-io">Low-level I/O</a>
-            <ul>
+            <li><a href="#low-level-io">Low-level I/O</a><ul>
             <li><a href="#my_puts.c">my_puts.c</a></li>
             <li><a href="#file_type.c">file_type.c</a></li>
             <li><a href="#parrot.c">parrot.c</a></li>
@@ -68,6 +67,8 @@
 <h1 id="introduction">Introduction</h1>
 <p>The first part of today’s practical aims at seeing how input/output is managed at low-level. To do so, you are going to be restricted in the headers you can use, meaning, you <strong>cannot</strong> use <code>&lt;stdio.h&gt;</code>.</p>
 <p>Here is the skeleton for this part: <a href="io_skeleton.tar.gz">I/O Skeleton</a></p>
+<p>You’ll need to use the following command to extract the files:</p>
+<pre class="bash"><code>asm$ tar xfv io_skeleton.tar.gz</code></pre>
 <h1 id="low-level-io">Low-level I/O</h1>
 <p>For this part, you will need the following <code>syscalls</code>:</p>
 <ul>

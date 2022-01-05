@@ -45,12 +45,12 @@
             <ul>
           <li><a href="#">Navigation</a>
             <ul>
-            <li><a href="#signals">Signals</a>
-            <ul>
+            <li><a href="#signals">Signals</a><ul>
             <li><a href="#reminder">Reminder</a></li>
             <li><a href="#list-signals">List signals</a></li>
             <li><a href="#tracing-signals">Tracing signals</a></li>
             <li><a href="#catching-signals">Catching signals</a></li>
+            <li><a href="#sending-signals">Sending Signals</a></li>
             </ul></li>
             </ul>
           </li>
@@ -89,7 +89,9 @@
 <h2 id="tracing-signals">Tracing signals</h2>
 <p>To trace signals sent to a process we’re going to use <code>strace(1)</code> (check the man page for more info).</p>
 <pre class="bash"><code>$ strace -e &#39;trace=!all&#39; [CMD]</code></pre>
-<p>You can have fun trying to see the different possible signals that you could get the kernel to send to your process. ### Exercise Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them. (For the sake of the exercise, do NOT compile with the usual flags)</p>
+<p>You can have fun trying to see the different possible signals that you could get the kernel to send to your process.</p>
+<h3 id="exercise">Exercise</h3>
+<p>Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them. (For the sake of the exercise, do NOT compile with the usual flags)</p>
 <ul>
 <li>What the malloc?!</li>
 </ul>
@@ -117,6 +119,7 @@ int main(void)
 
     return 0;
 }</code></pre>
+<p>(It should take up to 30 seconds to run)</p>
 <ul>
 <li>Do I even exist?</li>
 </ul>
@@ -155,7 +158,7 @@ int main(void)
 sighandler_t signal(int signum, sighandler_t handler);</code></pre>
 <p>There is a better alternative that we will favor: <code>sigaction(2)</code></p>
 <pre class="c"><code>int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);</code></pre>
-<h3 id="exercise">Exercise</h3>
+<h3 id="exercise-1">Exercise</h3>
 <p>The following exercises will only require you to play/modify with the following code</p>
 <pre class="c"><code>#define _POSIX_C_SOURCE 200809l
 
@@ -185,7 +188,9 @@ int main(void)
     return 0;
 }</code></pre>
 <p>Ctrl-C usually sends a <code>SIGINT</code> (interrupt) signal to the program to stop it, we could intercept it and change its behavior to not stop the program.</p>
-<p>Try to modify the signal intercepted and set it to <code>SIGKILL</code> and see what happens. ## Sending Signals As mentioned prior, you only need a PID to send a signal to a process .</p>
+<p>Try to modify the signal intercepted and set it to <code>SIGKILL</code> and see what happens.</p>
+<h2 id="sending-signals">Sending Signals</h2>
+<p>As mentioned prior, you only need a PID to send a signal to a process .</p>
 <ul>
 <li>On a terminal</li>
 </ul>
@@ -194,21 +199,21 @@ int main(void)
 <li>In C use <code>kill(2)</code></li>
 </ul>
 <pre class="c"><code>int kill(pid_t pid, int sig);</code></pre>
-<h3 id="exercise-1">Exercise</h3>
+<h3 id="exercise-2">Exercise</h3>
 <p>In this exercise, we’ll ask you to play a small game.</p>
 <p>First install the following <a href="game">binary file</a>, then make it executable through the following command:</p>
-<pre class="bash"><code>chmod +x game</code></pre>
+<pre class="bash"><code>$ chmod +x game</code></pre>
 <p>Then you can start the game by running the file like any other executable:</p>
-<pre class="bash"><code>./game</code></pre>
+<pre class="bash"><code>$ ./game</code></pre>
 <p>The program will first start by displaying its own PID, it will then wait for you to send a specific signal through a terminal in less than the time displayed. When you go through 100 rounds, there is a small surprise at the end.</p>
 <p>We do <strong>not</strong> expect you to go through the whole game <strong>yet</strong>. You can just have fun playing and discovering new signals.</p>
 <h4 id="little-spoiler-for-d4-workshop">Little spoiler for D4-workshop</h4>
 <p>You will have to write C code to “cheat” at this game, so you’re basically going to automatize the game. To make it easier, only the signal names separated by <code>\n</code> will be sent to <code>stdout</code>. All the extra information will be written on <code>stderr</code> so that it could be ignored when you try to read from stdout.</p>
 <p>Here are some commands to visualize what’s happening:</p>
 <pre class="bash"><code># Redirecting stdout to /dev/null (removing stdout and keeping stderr)
-./game &gt; /dev/null</code></pre>
-<pre class="bash"><code># Redirecting stderr to /dev/null (removing stdout and keeping stderr)
-./game 2&gt; /dev/null</code></pre>
+$ ./game &gt; /dev/null</code></pre>
+<pre class="bash"><code># Redirecting stderr to /dev/null (removing stderr and keeping stdout)
+$ ./game 2&gt; /dev/null</code></pre>
 <hr>
 </article>
 </main>

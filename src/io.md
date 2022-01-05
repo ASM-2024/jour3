@@ -14,6 +14,12 @@ use, meaning, you **cannot** use `<stdio.h>`.
 Here is the skeleton for this part:
 [I/O Skeleton](io_skeleton.tar.gz)
 
+You'll need to use the following command to extract the files:
+
+```bash
+asm$ tar xfv io_skeleton.tar.gz
+```
+
 # Low-level I/O
 For this part, you will need the following `syscalls`:
 

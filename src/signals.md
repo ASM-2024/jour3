@@ -43,6 +43,7 @@ To trace signals sent to a process we're going to use ``strace(1)`` (check the m
 $ strace -e 'trace=!all' [CMD]
 ```
 You can have fun trying to see the different possible signals that you could get the kernel to send to your process.
+
 ### Exercise
 Here are a few small C codes that should not work, try to figure out which signal is called by the kernel to kill them.
 (For the sake of the exercise, do NOT compile with the usual flags)
@@ -74,6 +75,8 @@ int main(void)
     return 0;
 }
 ```
+(It should take up to 30 seconds to run)
+
 - Do I even exist?
 ```c
 #include <stdio.h>
@@ -152,6 +155,7 @@ int main(void)
 Ctrl-C usually sends a ``SIGINT`` (interrupt) signal to the program to stop it, we could intercept it and change its behavior to not stop the program.
 
 Try to modify the signal intercepted and set it to ``SIGKILL`` and see what happens.
+
 ## Sending Signals
 As mentioned prior, you only need a PID to send a signal to a process .
 
@@ -168,11 +172,11 @@ In this exercise, we'll ask you to play a small game.
 
 First install the following [binary file](game), then make it executable through the following command:
 ```bash
-chmod +x game
+$ chmod +x game
 ```
 Then you can start the game by running the file like any other executable:
 ```bash
-./game
+$ ./game
 ```
 The program will first start by displaying its own PID, it will then wait for you to send a specific signal through a terminal in less than the time displayed. When you go through 100 rounds, there is a small surprise at the end.
 
@@ -185,9 +189,9 @@ You will have to write C code to "cheat" at this game, so you're basically going
 Here are some commands to visualize what's happening:
 ```bash
 # Redirecting stdout to /dev/null (removing stdout and keeping stderr)
-./game > /dev/null
+$ ./game > /dev/null
 ```
 ```bash
-# Redirecting stderr to /dev/null (removing stdout and keeping stderr)
-./game 2> /dev/null
+# Redirecting stderr to /dev/null (removing stderr and keeping stdout)
+$ ./game 2> /dev/null
 ```
